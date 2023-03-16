@@ -12,10 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.3.27",
     "@tomtom-international/web-sdk-maps": "^6.23.0",
     "axios": "^1.3.4",
     "cep-promise": "^4.4.0",
-    "coordenadas-do-cep": "^1.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
