@@ -4,25 +4,26 @@ const express = require("express");
 const app = express();
 
 const axios = require("axios");
-const { Client } = require("@googlemaps/google-maps-services-js");
-const client = new Client({});
+const querystring = require("querystring");
 
 app.use(express.json());
 app.use(cors());
 
 async function calculateDistance(address1, address2) {
   try {
-    const response = await client.distancematrix({
-      params: {
-        origins: [address1],
-        destinations: [address2],
-        key: process.env.GOOGLE_MAPS_API_KEY,
-      },
-      timeout: 1000, // milliseconds
-      axiosInstance: axios,
+    const params = querystring.stringify({
+      origins: address1,
+      destinations: address2,
+      travelMode: "driving",
+      key: process.env.BING_MAPS_API_KEY,
     });
 
-    const distance = response.data.rows[0].elements[0].distance.value;
+    const response = await axios.get(
+      `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?${params}`
+    );
+
+    const distance =
+      response.data.resourceSets[0].resources[0].results[0].travelDistance;
     return distance;
   } catch (error) {
     console.log(error);
